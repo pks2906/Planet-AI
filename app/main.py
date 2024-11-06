@@ -11,10 +11,16 @@ from app.core.pdf_processor import PDFProcessor
 from app.models import models
 from app.database import engine
 
+from fastapi.staticfiles import StaticFiles
+
+# Initialize FastAPI app
+app = FastAPI(title="PDF Q&A Service")
+
+# Mount the static directory
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 # Create database tables
 models.Base.metadata.create_all(bind=engine)
-
-app = FastAPI(title="PDF Q&A Service")
 
 # Configure CORS
 app.add_middleware(
